@@ -1,4 +1,4 @@
-from Domain.cheltuieli import creeaza_cheltuiala
+from Domain.cheltuieli import creeaza_cheltuiala, get_id
 from Logic.crud import adaugare, stergere, modif
 from Logic.crud import read
 
@@ -52,8 +52,16 @@ def test_stergere():
     assert aparitie_cheltuiala not in lst_cheltuieli_noi
     assert aparitie_cheltuiala in lst_cheltuieli
 
+def test_read():
+    lst_cheltuieli = get_cheltuieli()
+    nr_apartament = lst_cheltuieli[2]
+    caut_cheltuiala = read(lst_cheltuieli, get_id(nr_apartament))
+    assert caut_cheltuiala in lst_cheltuieli
+    assert read(lst_cheltuieli, None) == lst_cheltuieli
+
 
 def test_crud():
     test_modif()
     test_adaugare()
     test_stergere()
+    test_read()
