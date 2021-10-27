@@ -30,7 +30,7 @@ def test_adaugare():
     for x in lst_cheltuieli_noi:
         if x == cheltuiala_nou:
             gasit = True
-    assert gasit == False
+    assert gasit == True
 
 
 def test_modif():
