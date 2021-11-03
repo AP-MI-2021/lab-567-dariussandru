@@ -5,6 +5,16 @@ from Logic.crud import adaugare, modif, stergere
 from Logic.ordonarea_descrescator import ordonare
 from Logic.stergere_cheltuieli import sterge_cheltuieli_nr_ap
 
+def menu():
+    print("1.Adauga")
+    print("2.Modifica")
+    print("3.Sterge")
+    print("4.Stergerea tuturor cheltuielilor pentru un apartament dat")
+    print("5.Adunarea undei valori la toate cheltuielile dintr-o data citita")
+    print("6.Determinati cea mai mare cheltuiala pentru fiecare tip de cheltuiala")
+    print("7.Ordoneaza descrescator in functie de suma")
+    print("a.Afiseaza cheltuieli")
+    print("x.Iesire")
 
 def user_interface_add(lst_cheltuieli):
     try:
@@ -82,15 +92,8 @@ def user_interface_ordonare_descrescatr(lst_cheltuiala):
 def user_interface_crud(lst_cheltuieli):
 
     while True:
-        print("1.Adauga")
-        print("2.Modifica")
-        print("3.Sterge")
-        print("4.Stergerea tuturor cheltuielilor pentru un apartament dat")
-        print("5.Adunarea undei valori la toate cheltuielile dintr-o data citita")
-        print("6.Determinati cea mai mare cheltuiala pentru fiecare tip de cheltuiala")
-        print("7.Ordoneaza descrescator in functie de suma")
-        print("a.Afiseaza cheltuieli")
-        print("x.Iesire")
+        menu()
+
         optiune = input("Dati o optiune: ")
         if optiune == "1":
             lst_cheltuieli = user_interface_add(lst_cheltuieli)
@@ -113,3 +116,32 @@ def user_interface_crud(lst_cheltuieli):
         else:
             print("Optiune gresita, reincercati")
     return lst_cheltuieli
+
+
+def menu_command():
+    print("1. add, id , nr_ap, cheltuieli ,data, tip")
+    print("2. stergere id")
+    print("3. max_cheltuiala")
+    print("4. show_all")
+
+def user_interface_command(lst_cheltuieli):
+    menu_command()
+    optiune= input("alegeti o optiune:")
+    comanda=optiune.split(";")
+    for comanda in comanda:
+        com = comanda.split(",")
+        if com[0]== "add":
+            try:
+                lst_cheltuieli= adaugare(com[1],com[2],com[3],com[4],com[5],lst_cheltuieli)
+            except ValueError as ve:
+                print("Eroare",ve)
+        elif com[0]=="sterge":
+            lst_cheltuieli= stergere(com[1],lst_cheltuieli)
+        elif com[0]=="max_mcheltuiala":
+            print(cea_mai_mare_cheltuiala(lst_cheltuieli))
+        elif com[0]=="show_all":
+            print(user_interface_all(lst_cheltuieli))
+        else:
+            raise ValueError("Optiune invaida")
+
+
