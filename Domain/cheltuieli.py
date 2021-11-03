@@ -39,10 +39,5 @@ def get_tipul(cheltuiala):
     return cheltuiala[4]
 
 def get_str(cheltuiala):
-    return "Id-ul cheltuielii este {} cu nr de apartament {},are suma {},la data {} pentru tipul {}}".format(
-        get_id(cheltuiala),
-        get_nr_ap(cheltuiala),
-        get_suma(cheltuiala),
-        get_data(cheltuiala),
-        get_tipul(cheltuiala)
-    )
+    return f"Id-ul cheltuielii este {get_id(cheltuiala)} cu nr de apartament {get_nr_ap(cheltuiala)},are suma {get_suma(cheltuiala)},la data {get_data(cheltuiala)} pentru tipul {get_tipul(cheltuiala)}"
+
