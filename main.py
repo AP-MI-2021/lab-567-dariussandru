@@ -1,25 +1,25 @@
-from Tests.test_Crud import test_crud
-from Tests.test_adaugare_val_data import test_adaugare_val_data
-from Tests.test_cheltuiala_mare import test_cea_mai_mare_cheltuiala
-from Tests.test_ordonare_descrescator import test_ordonare_descrescator
-from Tests.test_stergere_cheltuieli import test_stergere_cheltuieli
-from User_Interface.console import user_interface_crud, user_interface_command
+from Logic.crud import adaugare
+from Tests.all_tests import run_all_tests
+from User_Interface.console import user_interface_crud
+from User_Interface.console_command import user_interface_command_console
 
 
 def main():
     lst_cheltuieli = []
-    menu = str(input("Dati tipul de meniu dorit:"))
-    if menu == "Basic":
-        user_interface_crud(lst_cheltuieli)
-    elif menu == "command":
-        user_interface_command(lst_cheltuieli)
+    undo_list=[]
+    redo_list=[]
+    lst_cheltuieli = adaugare(lst_cheltuieli, 1, 3, 234.5, '28.11.2004', 'alte cheltuieli', undo_list, redo_list)
+    lst_cheltuieli = adaugare(lst_cheltuieli, 2, 1, 300, '27.11.2004', 'canal', undo_list, redo_list)
+    print("1. Pentru a accesa meniul basic")
+    print("2. Pentru a accesa meniu command")
+    menu = int(input("Dati tipul de meniu dorit:"))
+    if menu == 1:
+        user_interface_crud(lst_cheltuieli, undo_list, redo_list)
+    elif menu == 2:
+        user_interface_command_console(lst_cheltuieli, undo_list, redo_list)
 
 
 
 if __name__ == '__main__':
-    test_crud()
-    test_stergere_cheltuieli()
-    test_adaugare_val_data()
-    test_cea_mai_mare_cheltuiala()
-    test_ordonare_descrescator()
+    run_all_tests()
     main()

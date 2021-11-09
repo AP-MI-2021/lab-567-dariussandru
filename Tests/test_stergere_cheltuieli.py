@@ -6,7 +6,8 @@ from Tests.test_Crud import get_cheltuieli
 def test_stergere_cheltuieli():
     lst_cheltuieli = get_cheltuieli()
     nr_ap = 3
-    lista_noua = sterge_cheltuieli_nr_ap(lst_cheltuieli, nr_ap)
+    lista_noua = sterge_cheltuieli_nr_ap(lst_cheltuieli, nr_ap ,[], [])
     assert len(lista_noua) == len(lst_cheltuieli)-1
     assert read(lst_cheltuieli,3) is not None
-
+    nr_ap=12
+  

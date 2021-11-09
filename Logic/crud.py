@@ -28,7 +28,7 @@ def format_data(data):
     if(luna%2==0 and zi >30) or (luna%2 == 1 and zi>31) or (luna == 2 and zi >28):
         raise ValueError(f'Data cheltuielii nu este corecta')
 
-def adaugare(lst_cheltuieli, id, nr_ap, suma, data, tip):
+def adaugare(lst_cheltuieli, id, nr_ap, suma, data, tip, undo_list, redo_list):
     """
     se formeaza lista
     :param lst_cheltuieli: O lista de cheltuieli
@@ -49,10 +49,12 @@ def adaugare(lst_cheltuieli, id, nr_ap, suma, data, tip):
     if tip != "canal" and tip != "intretinere" and tip !="alte cheltuieli":
         raise ValueError(f'Tipul cheltuielii este gresit')
     cheltuiala_noua = creeaza_cheltuiala(id, nr_ap, suma, data, tip)
+    undo_list.append(lst_cheltuieli)
+    redo_list.clear()
     return lst_cheltuieli + [cheltuiala_noua]
 
 
-def stergere(lst_cheltuieli, id):
+def stergere(lst_cheltuieli, id , undo_list , redo_list ):
     """
     se sterge din lista cheltuiala cu id = cu id-ul citit de la tastatura
     :param lst_cheltuieli: lista de cheltuieli
@@ -65,29 +67,33 @@ def stergere(lst_cheltuieli, id):
     for x in lst_cheltuieli:
         if get_id(x) != id:
             lista_noua_cheltuieli.append(x)
+    undo_list.append(lst_cheltuieli)
+    redo_list.clear()
     return lista_noua_cheltuieli
 
 
-def modif(lst_cheltuiali, cheltuiala_noua):
+def modif(lst_cheltuieli, cheltuiala_noua, undo_list, redo_list):
     """
     se modifica lista in functie de un id citit de la tastatura
-    :param lst_cheltuiali: lista de cheltuieli
+    :param lst_cheltuieli: lista de cheltuieli
     :param cheltuiala_noua: lista noua
     :return: lista dupa modificare
     """
-    if read(lst_cheltuiali,get_id(cheltuiala_noua)) is None:
+    if read(lst_cheltuieli,get_id(cheltuiala_noua)) is None:
         raise ValueError(f"Nu exhista cheltuiala cu id-ul {id}")
     lista_noua_cheltuieli = []
 
-    for x in lst_cheltuiali:
+    for x in lst_cheltuieli:
         if get_id(x) != get_id(cheltuiala_noua):
             lista_noua_cheltuieli.append(x)
         else:
             lista_noua_cheltuieli.append(cheltuiala_noua)
+    undo_list.append(lst_cheltuieli)
+    redo_list.clear()
     return lista_noua_cheltuieli
 
 
-def read(lst_cheltuieli, ap_id):
+def read(lst_cheltuieli, ap_id = None):
     """
     Functia verifica daca apare in lista de cheltuieli o anumita cheltuiala, cu id dat
     :param lst_cheltuieli:O lista de cheltueieli

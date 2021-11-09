@@ -15,7 +15,7 @@ def creeaza_cheltuiala(id, nr_apartament, suma, data, tipul):
         "data": data,
         "tip": tipul,
     } """
-    return (id,nr_apartament,suma,data,tipul)
+    return [id,nr_apartament,suma,data,tipul]
 
 
 def get_id(cheltuiala):
