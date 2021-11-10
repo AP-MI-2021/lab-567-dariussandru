@@ -1,9 +1,9 @@
 from Domain.cheltuieli import get_tipul, get_suma
 
 
-def cea_mai_mare_cheltuiala(lis_cheltuiala):
+def cea_mai_mare_cheltuiala(lst_cheltuiala):
     rezultat = {}
-    for x in lis_cheltuiala:
+    for x in lst_cheltuiala:
         tip = get_tipul(x)
         cost = get_suma(x)
         if tip not in rezultat:

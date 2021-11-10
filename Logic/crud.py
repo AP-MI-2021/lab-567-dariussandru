@@ -2,11 +2,11 @@ from Domain.cheltuieli import creeaza_cheltuiala, get_id
 
 def cifre(sir):
     """
-
-    :param sir:
-    :return:
+    det daca intr-un str sunt 2 cifre
+    :param sir: un string
+    :return: true daca str are 2 cifre sau false in caz contrar
     """
-    lst_cifre = ["0","1","2","3","4","5","6","7","8","9"]
+    lst_cifre = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     for litera in sir:
         if litera not in lst_cifre:
             return False
@@ -14,19 +14,22 @@ def cifre(sir):
 
 def format_data(data):
     """
-
-    :param data:
+    verifica daca data este introdusa corect
+    :param data:un str
     :return:
     """
     data_split = data.split(".")
+    if len(data_split) < 3:
+        raise ValueError('Data cheltuielii introduse nu este corecta')
     if len(data_split[0]) != 2 or len(data_split[1]) !=2 or len(data_split[2])!=4:
-        raise ValueError(f'Data cheltuielii nu este corecta')
-    if cifre(data_split[0])==False or cifre(data_split[1]) == False or cifre(data_split[2])== False:
-        raise ValueError(f'Data cheltuielii nu este corecta')
+        raise ValueError('Data cheltuielii introduse nu este corecta')
+    if cifre(data_split[0]) == False or cifre(data_split[1]) == False or cifre(data_split[2]) == False:
+        raise ValueError('Data cheltuielii introduse nu este corecta')
     zi= int(data_split[0])
     luna = int(data_split[1])
-    if(luna%2==0 and zi >30) or (luna%2 == 1 and zi>31) or (luna == 2 and zi >28):
-        raise ValueError(f'Data cheltuielii nu este corecta')
+    if(luna % 2 == 0 and zi > 30) or (luna % 2 == 1 and zi > 31) or (luna == 2 and zi > 28):
+        raise ValueError('Data cheltuielii nu este corecta')
+
 
 def adaugare(lst_cheltuieli, id, nr_ap, suma, data, tip, undo_list, redo_list):
     """
@@ -41,20 +44,21 @@ def adaugare(lst_cheltuieli, id, nr_ap, suma, data, tip, undo_list, redo_list):
     """
     if id < 0:
         raise ValueError(f"Id-ul {id} introdus nu este valabil")
-    if read(lst_cheltuieli,id) is None:
-        raise ValueError(f"Exista o cheltuiala cu id {id} introdus")
     if nr_ap < 0:
-        raise ValueError(f"Numarul apartamentului nu este valid")
+        raise ValueError("Numarul apartamentului nu este valid")
     format_data(data)
-    if tip != "canal" and tip != "intretinere" and tip !="alte cheltuieli":
-        raise ValueError(f'Tipul cheltuielii este gresit')
+    if tip != "canal" and tip != "intretinere" and tip != "alte cheltuieli":
+        raise ValueError("Tipul cheltuielii este gresit")
     cheltuiala_noua = creeaza_cheltuiala(id, nr_ap, suma, data, tip)
     undo_list.append(lst_cheltuieli)
     redo_list.clear()
-    return lst_cheltuieli + [cheltuiala_noua]
+    if lst_cheltuieli is None:
+        return [lst_cheltuieli] +[cheltuiala_noua]
+    else:
+        return lst_cheltuieli + [cheltuiala_noua]
 
 
-def stergere(lst_cheltuieli, id , undo_list , redo_list ):
+def stergere(lst_cheltuieli, id, undo_list , redo_list):
     """
     se sterge din lista cheltuiala cu id = cu id-ul citit de la tastatura
     :param lst_cheltuieli: lista de cheltuieli
@@ -79,10 +83,9 @@ def modif(lst_cheltuieli, cheltuiala_noua, undo_list, redo_list):
     :param cheltuiala_noua: lista noua
     :return: lista dupa modificare
     """
-    if read(lst_cheltuieli,get_id(cheltuiala_noua)) is None:
+    if read(lst_cheltuieli, get_id(cheltuiala_noua)) is None:
         raise ValueError(f"Nu exhista cheltuiala cu id-ul {id}")
     lista_noua_cheltuieli = []
-
     for x in lst_cheltuieli:
         if get_id(x) != get_id(cheltuiala_noua):
             lista_noua_cheltuieli.append(x)
@@ -93,7 +96,7 @@ def modif(lst_cheltuieli, cheltuiala_noua, undo_list, redo_list):
     return lista_noua_cheltuieli
 
 
-def read(lst_cheltuieli, ap_id = None):
+def read(lst_cheltuieli, ap_id):
     """
     Functia verifica daca apare in lista de cheltuieli o anumita cheltuiala, cu id dat
     :param lst_cheltuieli:O lista de cheltueieli
@@ -102,11 +105,10 @@ def read(lst_cheltuieli, ap_id = None):
     """
     if ap_id is None:
         return lst_cheltuieli
-
     nr_ap_cheltuiala = 0
     for cheltuiala in lst_cheltuieli:
         if get_id(cheltuiala) == ap_id:
             nr_ap_cheltuiala = cheltuiala
     if nr_ap_cheltuiala:
         return nr_ap_cheltuiala
-    return lst_cheltuieli
+    return None
