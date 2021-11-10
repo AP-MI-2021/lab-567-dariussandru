@@ -3,6 +3,15 @@ from Logic.crud import format_data
 
 
 def adaugare_val_data(lst_cheltuieli , data:str, val:int,undo_list,redo_list):
+    """
+    functia aduca la suma fiecare cheltuiala
+    :param lst_cheltuieli: lsti de cheltuieli
+    :param data: str introdus de utilizator
+    :param val: int introdus de utilizator
+    :param undo_list:lista de cheltuieli, ce se modifica in urma apelarii fiecarei functionalitati
+    :param redo_list:lista ce se modifica in urma apelarii fiecarei Undo
+    :return:
+    """
     format_data(data)
     lst_cheltuieli_noua =[]
     minim_o_cheltuiala = False

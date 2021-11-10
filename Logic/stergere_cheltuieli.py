@@ -3,10 +3,10 @@ from Domain.cheltuieli import get_nr_ap
 
 def sterge_cheltuieli_nr_ap(lst_cheltuieli, nr_ap, undo_list , redo_list):
     """
-    
-    :param lst_cheltuieli: 
-    :param nr_ap: 
-    :return: 
+    functia returneaza lista care se obtine in urma stergerii tututor cheltuielilor pentru un apartament dat
+    :param lst_cheltuieli: lst
+    :param nr_ap: int introdus de utilizator
+    :return: lst noua 
     """
     lista_noua=[]
     for x in lst_cheltuieli:
