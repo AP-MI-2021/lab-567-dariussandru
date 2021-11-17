@@ -42,6 +42,8 @@ def adaugare(lst_cheltuieli, id, nr_ap, suma, data, tip, undo_list, redo_list):
     :param tip: str
     :return: O noua lista
     """
+    if get_by_id(id,lst_cheltuieli) is not None:
+        raise ValueError(f"id-ul {id} este introdus deja")
     if id < 0:
         raise ValueError(f"Id-ul {id} introdus nu este valabil")
     if nr_ap < 0:
