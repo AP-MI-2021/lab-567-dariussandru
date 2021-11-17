@@ -8,12 +8,14 @@ def test_undo_redo():
     lst_cheltuieli = get_cheltuieli()
     undo_list = []
     redo_list = []
-    lst_cheltuieli_noua = adaugare(lst_cheltuieli, *creeaza_cheltuiala(7, 3, 3, "11.11.1111", "canal"), undo_list, redo_list)
+    lst_cheltuieli_noua = adaugare(lst_cheltuieli, *creeaza_cheltuiala(7, 3, 3, "11.11.1111", "canal"),
+                                   undo_list, redo_list)
     lst_cheltuieli_noua = do_undo(undo_list, redo_list, lst_cheltuieli_noua)
     assert lst_cheltuieli_noua == lst_cheltuieli
     lst_cheltuieli_noua = do_redo(undo_list, redo_list, lst_cheltuieli_noua)
     assert len(lst_cheltuieli_noua) == len(lst_cheltuieli)+1
 
+    
 def test_undo_redo_lab():
     lst_cheltuieli = []
     undo_list = []
@@ -26,7 +28,7 @@ def test_undo_redo_lab():
                               [3, 3, 300, "10.10.2010", "canal"]]
     lst_cheltuieli = do_undo(undo_list, redo_list, lst_cheltuieli)
     assert lst_cheltuieli == [[1, 1, 100, "10.10.2010", "canal"],
-                              [2, 2, 200, "10.10.2010", "canal"],]
+                              [2, 2, 200, "10.10.2010", "canal"]]
     lst_cheltuieli = do_undo(undo_list, redo_list, lst_cheltuieli)
     assert lst_cheltuieli == [[1, 1, 100, "10.10.2010", "canal"]]
     lst_cheltuieli = do_undo(undo_list, redo_list, lst_cheltuieli)
